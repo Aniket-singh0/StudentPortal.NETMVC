@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Student Portal
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Site CSS -->
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/StudentAccountmvc.styles.css"
+          asp-append-version="true" />
+
+    <style>
+
+            body {
+                margin: 0;
+                background-color: #f4f7fb;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            /* NAVBAR */
+
+            .portal-navbar {
+                background: #172033;
+                min-height: 65px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            }
+
+            .portal-brand {
+                color: white !important;
+                font-size: 21px;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+            .portal-brand span {
+                color: #4dabf7;
+            }
+
+            .portal-nav-link {
+                color: #d9e2ec !important;
+                margin-left: 8px;
+                padding: 9px 14px !important;
+                border-radius: 6px;
+                transition: 0.2s;
+            }
+
+            .portal-nav-link:hover {
+                background-color: #26344d;
+                color: white !important;
+            }
+
+            .portal-nav-link.active {
+                background-color: #0d6efd;
+                color: white !important;
+            }
+
+            /* USER AREA */
+
+            .user-area {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: white;
+            }
+
+            .user-icon {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background-color: #0d6efd;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+
+            .user-name {
+                font-size: 14px;
+            }
+
+            .user-role {
+                color: #aeb9c9;
+                font-size: 12px;
+            }
+
+            /* MAIN CONTENT */
+
+            .main-content {
+                min-height: calc(100vh - 125px);
+                padding-bottom: 30px;
+            }
+
+            /* FOOTER */
+
+            .portal-footer {
+                background-color: #172033;
+                color: #aeb9c9;
+                padding: 16px 0;
+                font-size: 13px;
+            }
+
+            .portal-footer a {
+                color: #4dabf7;
+                text-decoration: none;
+            }
+
+            .portal-footer a:hover {
+                color: white;
+            }
+
+            /* MOBILE */
+
+            @@media (max-width: 767px) {
+
+                .user-area {
+                    margin-top: 12px;
+                    margin-bottom: 10px;
+                }
+
+                .portal-nav-link {
+                    margin-left: 0;
+                    margin-top: 4px;
+                }
+
+            }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg portal-navbar">
+
+            <div class="container-fluid px-4">
+
+                <!-- BRAND -->
+
+                <a class="portal-brand"
+                   asp-controller="Dashboard"
+                   asp-action="Index">
+
+                    Student<span>Portal</span>
+
+                </a>
+
+
+                <!-- MOBILE BUTTON -->
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#portalNavbar"
+                        aria-controls="portalNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="collapse navbar-collapse"
+                     id="portalNavbar">
+
+
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                        <li class="nav-item">
+
+                            <a class="nav-link portal-nav-link"
+                               asp-controller="Dashboard"
+                               asp-action="Index">
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link portal-nav-link"
+                               asp-controller="Profile"
+                               asp-action="Index">
+
+                                My Profile
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link portal-nav-link"
+                               asp-controller="Course"
+                               asp-action="Index">
+
+                                Courses
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link portal-nav-link"
+                               asp-controller="Assignment"
+                               asp-action="Index">
+
+                                Assignments
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- USER -->
+
+                        <li class="nav-item ms-lg-3">
+
+                            <div class="user-area">
+
+                                <div class="user-icon">
+                                    👤
+                                </div>
+
+                                <div>
+
+                                    <div class="user-name">
+
+                                        @Context.Session.GetString("StudentName")
+
+                                    </div>
+
+                                    <div class="user-role">
+
+                                        Student
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- LOGOUT -->
+
+                        <li class="nav-item ms-lg-3">
+
+                            <a class="btn btn-outline-light btn-sm px-3"
+                               asp-controller="Account"
+                               asp-action="Logout">
+
+                                Logout
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main role="main"
+          class="main-content">
+
+        @RenderBody()
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="portal-footer">
+
+        <div class="container-fluid px-4">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    © 2026 Student Portal
+
+                </div>
+
+                <div class="col-md-6 text-md-end">
+
+                    <span>
+                        StudentAccountmvc
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

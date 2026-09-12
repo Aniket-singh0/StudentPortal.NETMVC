@@ -1,0 +1,95 @@
+﻿@model StudentAccountmvc.Models.Result
+
+@{
+    ViewData["Title"] = "Add Result";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4>Add Result</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Subject
+                    </label>
+
+                    <input asp-for="Subject"
+                           class="form-control" />
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Marks
+                        </label>
+
+                        <input asp-for="Marks"
+                               type="number"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Maximum Marks
+                        </label>
+
+                        <input asp-for="MaxMarks"
+                               type="number"
+                               class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Grade
+                    </label>
+
+                    <select asp-for="Grade"
+                            class="form-select">
+
+                        <option value="">Select Grade</option>
+                        <option>A+</option>
+                        <option>A</option>
+                        <option>B+</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                        <option>F</option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-success">
+                    Add Result
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

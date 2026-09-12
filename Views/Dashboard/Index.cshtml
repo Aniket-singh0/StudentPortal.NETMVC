@@ -1,0 +1,732 @@
+﻿
+@model StudentAccountmvc.Models.Student
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<style>
+    body {
+        background: #f5f7fb;
+    }
+
+    .dashboard-wrapper {
+        min-height: calc(100vh - 30px);
+    }
+
+    /* SIDEBAR */
+    .student-sidebar {
+        background: #172033;
+        border-radius: 14px;
+        min-height: 720px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .sidebar-header {
+        padding: 24px 20px;
+        background: #1f2b46;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .sidebar-logo {
+        width: 45px;
+        height: 45px;
+        background: #0d6efd;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar-header h5 {
+        color: white;
+        margin-bottom: 3px;
+        font-weight: 600;
+    }
+
+    .sidebar-header small {
+        color: #aeb8ca;
+    }
+
+    .sidebar-menu {
+        padding: 14px 10px;
+    }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #c7cfdd;
+            text-decoration: none;
+            padding: 12px 14px;
+            margin-bottom: 5px;
+            border-radius: 9px;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+            .sidebar-menu a:hover {
+                background: #263552;
+                color: white;
+            }
+
+            .sidebar-menu a.active {
+                background: #0d6efd;
+                color: white;
+            }
+
+    .menu-icon {
+        width: 24px;
+        text-align: center;
+        font-size: 17px;
+    }
+
+    .logout-link {
+        color: #ff8f8f !important;
+        margin-top: 12px;
+    }
+
+        .logout-link:hover {
+            background: #3b2930 !important;
+            color: #ffb0b0 !important;
+        }
+
+
+    /* MAIN */
+    .welcome-card {
+        background: white;
+        border: none;
+        border-radius: 14px;
+        padding: 28px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    }
+
+    .welcome-title {
+        font-size: 27px;
+        font-weight: 700;
+        color: #172033;
+    }
+
+    .welcome-text {
+        color: #747d8c;
+        margin-bottom: 0;
+    }
+
+    .student-badge {
+        background: #eef4ff;
+        color: #0d6efd;
+        padding: 10px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    /* STAT CARDS */
+    .stat-card {
+        background: white;
+        border: none;
+        border-radius: 14px;
+        padding: 20px;
+        height: 100%;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+        transition: 0.2s;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 22px rgba(0,0,0,0.08);
+        }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+    }
+
+    .icon-blue {
+        background: #eaf2ff;
+    }
+
+    .icon-green {
+        background: #e9f8ef;
+    }
+
+    .icon-cyan {
+        background: #e7f8fb;
+    }
+
+    .icon-purple {
+        background: #f0eaff;
+    }
+
+    .stat-label {
+        color: #7a8493;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .stat-number {
+        color: #172033;
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .stat-link {
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+
+    /* QUICK ACTIONS */
+    .section-card {
+        background: white;
+        border: none;
+        border-radius: 14px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #172033;
+    }
+
+    .quick-action {
+        display: block;
+        text-decoration: none;
+        background: #f8f9fc;
+        border: 1px solid #edf0f5;
+        border-radius: 10px;
+        padding: 17px;
+        color: #263143;
+        transition: 0.2s;
+    }
+
+        .quick-action:hover {
+            background: #eef4ff;
+            border-color: #cfe0ff;
+            color: #0d6efd;
+            transform: translateY(-2px);
+        }
+
+    .quick-icon {
+        font-size: 22px;
+        margin-bottom: 7px;
+    }
+
+    .quick-title {
+        display: block;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .quick-description {
+        display: block;
+        font-size: 12px;
+        color: #8992a0;
+        margin-top: 3px;
+    }
+
+    @@media (max-width: 991px) {
+        .student-sidebar {
+            min-height: auto;
+        }
+
+        .welcome-title {
+            font-size: 22px;
+        }
+    }
+</style>
+
+
+<div class="container-fluid py-4 dashboard-wrapper">
+
+    <div class="row g-4">
+
+        <!-- ================= SIDEBAR ================= -->
+        <div class="col-lg-3 col-md-4">
+
+            <div class="student-sidebar">
+
+                <!-- SIDEBAR HEADER -->
+                <div class="sidebar-header">
+
+                    <div class="sidebar-logo">
+                        🎓
+                    </div>
+
+                    <h5>Student Portal</h5>
+
+                    <small>
+                        @Model.FullName
+                    </small>
+
+                </div>
+
+
+                <!-- MENU -->
+                <div class="sidebar-menu">
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="active">
+
+                        <span class="menu-icon">🏠</span>
+                        <span>Dashboard</span>
+
+                    </a>
+
+
+                    <a asp-controller="Profile"
+                       asp-action="Index">
+
+                        <span class="menu-icon">👤</span>
+                        <span>My Profile</span>
+
+                    </a>
+
+
+                    <a asp-controller="Course"
+                       asp-action="Index">
+
+                        <span class="menu-icon">📚</span>
+                        <span>My Courses</span>
+
+                    </a>
+
+
+                    <a asp-controller="Assignment"
+                       asp-action="Index">
+
+                        <span class="menu-icon">📝</span>
+                        <span>Assignments</span>
+
+                    </a>
+
+
+                    <a asp-controller="Result"
+                       asp-action="Index">
+
+                        <span class="menu-icon">📊</span>
+                        <span>Results</span>
+
+                    </a>
+
+
+                    <a asp-controller="Attendance"
+                       asp-action="Index">
+
+                        <span class="menu-icon">📅</span>
+                        <span>Attendance</span>
+
+                    </a>
+
+                    <a asp-controller="Fees"
+                       asp-action="Index"
+                       class="nav-link">
+                        💰 Fees
+                    </a>
+
+                    <a asp-controller="Settings"
+                       asp-action="Index">
+
+                        <span class="menu-icon">⚙️</span>
+                        <span>Settings</span>
+
+                    </a>
+
+
+                    <a asp-controller="Account"
+                       asp-action="Logout"
+                       class="logout-link">
+
+                        <span class="menu-icon">🚪</span>
+                        <span>Logout</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="col-lg-9 col-md-8">
+
+
+            <!-- WELCOME CARD -->
+            <div class="welcome-card mb-4">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                    <div>
+
+                        <h2 class="welcome-title mb-2">
+                            Welcome, @Model.FullName 👋
+                        </h2>
+
+                        <p class="welcome-text">
+                            Manage your academic activities from your
+                            student dashboard.
+                        </p>
+
+                    </div>
+
+                    <div class="student-badge">
+                        🎓 Student Account
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= STATISTICS ================= -->
+            <div class="row g-3 mb-4">
+
+
+                <!-- COURSES -->
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+
+                                <p class="stat-label">
+                                    Total Courses
+                                </p>
+
+                                <h3 class="stat-number">
+                                    @ViewBag.CourseCount
+                                </h3>
+
+                            </div>
+
+                            <div class="stat-icon icon-blue">
+                                📚
+                            </div>
+
+                        </div>
+
+                        <a asp-controller="Course"
+                           asp-action="Index"
+                           class="stat-link text-primary">
+
+                            View Courses →
+
+                        </a>
+
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ASSIGNMENTS -->
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+
+                                <p class="stat-label">
+                                    Assignments
+                                </p>
+
+                                <h3 class="stat-number">
+                                    @ViewBag.AssignmentCount
+                                </h3>
+
+                            </div>
+
+                            <div class="stat-icon icon-green">
+                                📝
+                            </div>
+
+                        </div>
+
+                        <a asp-controller="Assignment"
+                           asp-action="Index"
+                           class="stat-link text-success">
+
+                            View Assignments →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESULTS -->
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+
+                                <p class="stat-label">
+                                    Results
+                                </p>
+
+                                <h3 class="stat-number">
+                                    @ViewBag.ResultCount
+                                </h3>
+
+                            </div>
+
+                            <div class="stat-icon icon-cyan">
+                                📊
+                            </div>
+
+                        </div>
+
+                        <a asp-controller="Result"
+                           asp-action="Index"
+                           class="stat-link text-info">
+
+                            View Results →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ATTENDANCE -->
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+
+                                <p class="stat-label">
+                                    Attendance
+                                </p>
+
+                                <h3 class="stat-number">
+                                    @ViewBag.AttendanceCount
+                                </h3>
+
+                            </div>
+
+                            <div class="stat-icon icon-purple">
+                                📅
+                            </div>
+
+                        </div>
+
+                        <a asp-controller="Attendance"
+                           asp-action="Index"
+                           class="stat-link text-primary">
+
+                            View Attendance →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+            <div class="section-card">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-4">
+
+                        <h5 class="section-title mb-1">
+                            Quick Actions
+                        </h5>
+
+                        <small class="text-muted">
+                            Quickly access your frequently used options.
+                        </small>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        <!-- PROFILE -->
+                        <div class="col-md-6 col-xl-4">
+
+                            <a asp-controller="Profile"
+                               asp-action="Index"
+                               class="quick-action">
+
+                                <div class="quick-icon">
+                                    👤
+                                </div>
+
+                                <span class="quick-title">
+                                    My Profile
+                                </span>
+
+                                <span class="quick-description">
+                                    View and update your information
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- COURSE -->
+                        <div class="col-md-6 col-xl-4">
+
+                            <a asp-controller="Course"
+                               asp-action="Create"
+                               class="quick-action">
+
+                                <div class="quick-icon">
+                                    📚
+                                </div>
+
+                                <span class="quick-title">
+                                    Add Course
+                                </span>
+
+                                <span class="quick-description">
+                                    Add a new course
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- ASSIGNMENT -->
+                        <div class="col-md-6 col-xl-4">
+
+                            <a asp-controller="Assignment"
+                               asp-action="Create"
+                               class="quick-action">
+
+                                <div class="quick-icon">
+                                    📝
+                                </div>
+
+                                <span class="quick-title">
+                                    Add Assignment
+                                </span>
+
+                                <span class="quick-description">
+                                    Create a new assignment
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- RESULT -->
+                        <div class="col-md-6 col-xl-4">
+
+                            <a asp-controller="Result"
+                               asp-action="Create"
+                               class="quick-action">
+
+                                <div class="quick-icon">
+                                    📊
+                                </div>
+
+                                <span class="quick-title">
+                                    Add Result
+                                </span>
+
+                                <span class="quick-description">
+                                    Add examination result
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- ATTENDANCE -->
+                        <div class="col-md-6 col-xl-4">
+
+                            <a asp-controller="Attendance"
+                               asp-action="Create"
+                               class="quick-action">
+
+                                <div class="quick-icon">
+                                    📅
+                                </div>
+
+                                <span class="quick-title">
+                                    Add Attendance
+                                </span>
+
+                                <span class="quick-description">
+                                    Record attendance
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- SETTINGS -->
+                        <div class="col-md-6 col-xl-4">
+
+                            <a asp-controller="Settings"
+                               asp-action="Index"
+                               class="quick-action">
+
+                                <div class="quick-icon">
+                                    ⚙️
+                                </div>
+
+                                <span class="quick-title">
+                                    Settings
+                                </span>
+
+                                <span class="quick-description">
+                                    Manage your account
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
