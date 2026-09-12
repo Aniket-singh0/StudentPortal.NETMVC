@@ -1,0 +1,96 @@
+﻿```cshtml
+@model StudentAccountmvc.Models.Attendance
+
+@{
+    ViewData["Title"] = "Edit Attendance";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit Attendance</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-controller="Attendance"
+                  asp-action="Edit"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Subject" class="form-label">
+                        Subject
+                    </label>
+
+                    <input asp-for="Subject"
+                           class="form-control"
+                           placeholder="Enter subject" />
+
+                    <span asp-validation-for="Subject"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TotalClasses" class="form-label">
+                        Total Classes
+                    </label>
+
+                    <input asp-for="TotalClasses"
+                           type="number"
+                           min="0"
+                           class="form-control"
+                           placeholder="Enter total classes" />
+
+                    <span asp-validation-for="TotalClasses"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PresentClasses" class="form-label">
+                        Present Classes
+                    </label>
+
+                    <input asp-for="PresentClasses"
+                           type="number"
+                           min="0"
+                           class="form-control"
+                           placeholder="Enter present classes" />
+
+                    <span asp-validation-for="PresentClasses"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Update Attendance
+                </button>
+
+                <a asp-controller="Attendance"
+                   asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+```
