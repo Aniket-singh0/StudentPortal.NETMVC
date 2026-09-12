@@ -1,0 +1,75 @@
+﻿@model StudentAccountmvc.Models.Attendance
+
+@{
+    ViewData["Title"] = "Add Attendance";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                Add Attendance
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Subject
+                    </label>
+
+                    <input asp-for="Subject"
+                           class="form-control"
+                           placeholder="Enter subject" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Total Classes
+                    </label>
+
+                    <input asp-for="TotalClasses"
+                           type="number"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Present Classes
+                    </label>
+
+                    <input asp-for="PresentClasses"
+                           type="number"
+                           class="form-control" />
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-success">
+                    Add Attendance
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,75 @@
+﻿@model StudentAccountmvc.Models.Course
+
+@{
+    ViewData["Title"] = "Edit Course";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h4 class="mb-0">
+                Edit Course
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" method="post">
+
+                <input type="hidden"
+                       asp-for="Id" />
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Course Name
+                    </label>
+
+                    <input asp-for="CourseName"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Instructor
+                    </label>
+
+                    <input asp-for="Instructor"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Duration
+                    </label>
+
+                    <input asp-for="Duration"
+                           class="form-control" />
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-success">
+                    Update Course
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
